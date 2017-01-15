@@ -3,4 +3,100 @@
     <string name="LMB">Left Click</string>
     <string name="RMB">Right Click</string>
     <string name="select_device_str">Select your device:</string>
+    <string name="start">START</string>
+    <string name="exit">EXIT</string>
+    <string name="help">HELP</string>
+    <string name="getting_started_str">1. Getting Started</string>
+    <string name="how_to_use_str">2. How to use</string>
+    <string name="create_macros_str">3. Create Macros</string>
+    <string name="keycodes_str">4. Macros and Key Codes</string>
+    <string name="sensors_str">5. Sensors</string>
+    <string name="troubleshooting_str">6. Troubleshooting</string>
+
+
+    <string name="settings">SETTINGS</string>
+    <string name="manage_macros_str">Manage your macros:</string>
+    <string name="add_str">Add a new macro</string>
+    <string name="name_str">Name :</string>
+    <string name="add_key_str">Add a key</string>
+    <string name="keys_str">Keys :</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="sensitivity">Sensitivity:</string>
+    <string name="m_sensitivity">Mouse Sensitivity:</string>
+    <string name="s_sensitivity">Scroll Sensitivity:</string>
+    <string name="help_1"> FIRST STEPS: \n
+        \t First, you need to set up a bluetooth server on your computer.\n
+        To do this, you need to download it from this link:\n
+        https://mega.nz/#!fQhGAKqJ!qRF2xtOyVWNDYooXYwsKrnC-qZVVdC_MdY_c81Qou3Y\n\n
+        Once downloaded, you have to open a command prompt and run the BluetoothServer.jar file
+        by writing the command:\n
+        \"java -jar BluetoothServer.jar\"\n
+        This will start the server on your computer so the android device can be connected.\n
+        After this, you have to pair your android device with your computer using bluetooth, so your
+        computer will become visible in the device selection screen of this App.\n
+        Once the device has been successfully paired, you just have to select it from the screen and
+        you\'re ready to go!
+    </string>
+    <string name = "help_2">USING THE MOUSE:\n
+        \t Once connected, you will see a central pannel that can be used to move the cursor, in the
+        same way that you would do with a laptop touchpad.\n
+        The touchpad can detect click and double-click motion, but you can also use the two mouse
+        buttons on the top.\n
+        To use the keyboard, click the big button at the bottom of the screen.\n
+        To switch between keyboard and keyboard macros, swipe the bottom portion of the screen to
+        the left or right.\n
+        You can also change the mouse sensitivity with the two seekbars below the touchpad.
+    </string>
+    <string name = "help_3">EDITING YOUR MACROS:\n
+        \t You can create, modify or delete personalized key combinations or "keyboard macros".\n
+        To do this, you cave to select the "Settings" option at the main menu, and you will be
+        presented with a grid of buttons, each one representing a macro.\n
+        To create a new macro, press the "+" button at the top of the screen.\n
+        To modify or delete an existing macro, press and hold the macro you want to modify.
+    </string>
+
+    <string name = "help_4">MACRO CODES: \n
+        \t If you tried to create or modify a macro, you would already have noticed that they use
+        specific keywords to represent the desired keys to press, like "KEYCODE_CTRL_LEFT". These
+        codenames represent each of the keys that the macro will press, and must be separated by a
+        slash "/". You can see the full list of Key Codes in this page:\n
+        https://developer.android.com/reference/android/view/KeyEvent.html#Constants
+    </string>
+
+    <string name = "help_5">USING THE SENSORS: \n
+        \t You can use your motion sensors to move the cursor in the screen!\n
+        To do this, you simply have to toggle the desired motion mode using the 2 toggle buttons:
+        "accel" or "gyro".\n\n
+        -accel lets you use your phone as a mouse, by sliding it over a flat surface\n
+        -gyro lets you move the mouse by tilting your phone in different directions
+    </string>
+
+    <string name = "help_6">IF YOU CANT START THE SERVER ON LINUX: \n\n
+    Install the following packages:\n
+    libbluetooth\n
+    libbluetooth3\n
+    libbluetooth-dev\n\n
+
+
+    Open a terminal and run:\n
+    sudo nano /etc/systemd/system/bluetooth.target.wants/bluetooth.service\n
+
+    then change the line:\n
+
+    ExecStart=/usr/lib/bluetooth/bluetoothd\n
+
+    to:\n
+
+    ExecStart=/usr/lib/bluetooth/bluetoothd -C\n
+
+    then reload the bluetooth daemon:\n
+
+    sudo systemctl daemon-reload\n
+
+    sudo systemctl restart bluetooth\n\n
+
+    If the problem persists, try running the server in super user (sudo) mode.
+    </string>
+
 </resources>

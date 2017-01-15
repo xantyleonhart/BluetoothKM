@@ -356,10 +356,7 @@ public class BluetoothService extends Service {
      */
     private void connectionLost() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Utils.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(Utils.TOAST, "Device connection was lost");
-        msg.setData(bundle);
+        Message msg = mHandler.obtainMessage(Utils.MESSAGE_DISCONNECTED);
         mHandler.sendMessage(msg);
     }
 

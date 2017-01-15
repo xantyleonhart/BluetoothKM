@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="es.udc.ps1617.bluetoothkm" >
+    package="es.udc.ps1617.bluetoothkm">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -10,14 +10,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".DeviceSelectActiv" />
 
         <service
             android:name=".BluetoothService"
@@ -31,8 +25,18 @@
         <service
             android:name=".MouseSensorService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true" />
+
+        <activity android:name=".MainMenuActiv">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".SettingsActiv" />
+        <activity android:name=".SelectKeysActiv"></activity>
     </application>
 
 </manifest>

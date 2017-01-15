@@ -8,6 +8,10 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +21,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-public class UserInteractionActiv extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener{
+public class UserInteractionActiv extends AppCompatActivity implements View.OnTouchListener,OnMacroClickedListener{
+    private static final int NUM_ITEMS = 2;
+
     BluetoothService bt_serv;
     BluetoothService.SimpleBinder btBinder=null;
     MouseSensorService ms_serv;
@@ -29,9 +37,19 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
     Button but_rmb;
     ImageButton but_key;
     TouchpadView touchpad;
+    TouchpadView wheel;
+    SeekBar mouse_sens;
+    SeekBar wheel_sens;
+    ToggleButton tog_Accel;
+    ToggleButton tog_Gyro;
+
+    ViewPager mPager;
+    MyAdapter mAdapter;
 
     float X;
     float Y;
+
+    float scroll_Y;
 
     private final Handler mHandler = new Handler(){
         @Override
@@ -43,7 +61,28 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
                     break;
                 case Utils.MESSAGE_WRITE:
                     String message = (String)msg.obj;
-                    bt_serv.sendMessage(message);
+                    switch(msg.arg1){
+                        case Utils.SENSOR_ACCEL:
+                                if(!tog_Accel.isChecked()){//si el acelerometro está desactivado
+                                    message=null;//cancela el mensaje
+                                }
+                            break;
+                        case Utils.SENSOR_GYRO :
+                            if(!tog_Gyro.isChecked()){//si el giroscopio está desactivado
+                                message=null;//cancela el mensaje
+                                //Log.d("MESSAGE","GYRO OFF");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    if (message!=null) {
+                        bt_serv.sendMessage(message);
+                    }
+                    break;
+                case Utils.MESSAGE_DISCONNECTED:
+                    Toast.makeText(getBaseContext(),"Connection lost", Toast.LENGTH_SHORT).show();
+                    finish();
                     break;
                 default:
                     break;
@@ -61,34 +100,59 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
         attachBluetooth();
 
         //bind accelerometer MouseSensorService (experimental)
-        //attachSensor();
+        attachSensor();
 
         but_lmb=(Button)findViewById(R.id.lm_but);
         but_lmb.setOnTouchListener(this);
         but_rmb=(Button)findViewById(R.id.rm_but);
         but_rmb.setOnTouchListener(this);
+        wheel = (TouchpadView)findViewById(R.id.wheel);
+        wheel.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN: //TOUCH MOUSEWHEEL
+                        scroll_Y=event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE: //SCROLL
+                        int move = Math.round(event.getY()-scroll_Y);
+                        int sensitivity = Math.round(wheel_sens.getProgress()/100f);
+                        bt_serv.sendMessage(Utils.SCROLL+"/"+move*sensitivity+"\n");
 
-        but_key=(ImageButton)findViewById(R.id.keyboard_but);
-        but_key.setOnClickListener(this);
+                        scroll_Y= event.getY();
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+
 
         touchpad=(TouchpadView)findViewById(R.id.touchpad);
-        touchpad.setOnClickListener(this);
         touchpad.setOnTouchListener(this);
-    }
 
+        mouse_sens = (SeekBar)findViewById(R.id.mouse_sens_bar);
+        mouse_sens.setMax(200);
+        mouse_sens.setProgress(100);
+        wheel_sens = (SeekBar)findViewById(R.id.scroll_sens_bar);
+        wheel_sens.setMax(50);
+        wheel_sens.setProgress(50);
 
-    @Override
-    public void onClick(View v) {
-        if(v==but_key){//SHOW KEYBOARD
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-        }
+        tog_Accel = (ToggleButton)findViewById(R.id.toggle_accel);
+        tog_Gyro = (ToggleButton)findViewById(R.id.toggle_gyro);
+
+        mAdapter = new MyAdapter(getSupportFragmentManager());
+        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
     }
 
     @Override
     protected void onDestroy() {
         bt_serv.stop();
-        ms_serv.stop();
+        if (ms_serv!=null){
+            ms_serv.stop();
+        }
         super.onDestroy();
     }
 
@@ -105,7 +169,7 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
             btBinder = (BluetoothService.SimpleBinder) bind;
             bt_serv = btBinder.getService(mHandler);
 
-            bt_serv.sendMessage("Hola holita bluetooth\n");
+            bt_serv.sendMessage("Test Message\n");
         }
 
         @Override
@@ -172,8 +236,10 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
                     //medir el desplazamiento
                     int despl_x = Math.round(event.getX() - X);
                     int despl_y = Math.round(event.getY() - Y);
+                    int sensitivity = Math.round(mouse_sens.getProgress()/100f);
                     //enviar orden de movimiento
-                    bt_serv.sendMessage(Utils.MOUSE_MOVE + "/" + despl_x + "/" + despl_y + "\n");
+                    bt_serv.sendMessage(Utils.MOUSE_MOVE + "/" + despl_x*sensitivity + "/"
+                                                               + despl_y*sensitivity + "\n");
                     //actualizar posición del ratón
                     X = event.getX();
                     Y = event.getY();
@@ -204,10 +270,10 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
         if (keyCode == KeyEvent.KEYCODE_SHIFT_LEFT||keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT)
         {
             Log.d("KEY","SHIFT activated"+keyCode);
-        }else {
+        }
             Log.d("KEY", KeyEvent.keyCodeToString(keyCode) + ": " + keyCode);
             bt_serv.sendMessage(Utils.KEY_PRESS + "/" + Utils.keytoJava(keyCode) + "/" + 1 + "\n");
-        }
+
         return super.onKeyDown(keyCode, event);
     }
 
@@ -224,5 +290,45 @@ public class UserInteractionActiv extends AppCompatActivity implements View.OnTo
     }
 
 
+    //MACRO FRAGMENT LISTENER
+    @Override
+    public void onMacroEdit(Button b) {
+        //Not used
+    }
+
+    @Override
+    public void onMacroClick(Button b,int pressed) {
+        String [] args = b.getTag().toString().split("/");
+
+        for(String s:args){
+            bt_serv.sendMessage(Utils.KEY_PRESS+"/"+Utils.keytoJava(KeyEvent.keyCodeFromString(s))+"/"+pressed+"\n");
+        }
+
+    }
+
+
+    public static class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new KeyboardFragment();
+                case 1:
+                    return new MacroFragm();
+                default:
+                    return null;
+            }
+        }
+    }
 
 }
