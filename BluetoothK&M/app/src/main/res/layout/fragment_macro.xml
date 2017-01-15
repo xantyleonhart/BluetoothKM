@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="es.udc.ps1617.bluetoothkm.MacroFragm">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:alignmentMode="alignMargins"
+            android:id="@+id/layout_macro">
+            <!--<Button android:text="Ctrl+Alt+T"
+                android:layout_columnWeight="1"
+                android:tag="KEYCODE_CTRL_LEFT/KEYCODE_ALT_LEFT/KEYCODE_T"
+                android:id="@+id/def_macro"/>
+            <Button android:text="boton"
+                android:layout_columnWeight="1"/>
+            <Button android:text="boton"
+                android:layout_columnWeight="1"/>
+            <Button android:text="boton"
+                android:layout_columnWeight="1"/>-->
+        </GridLayout>
+
+    </ScrollView>
+
+</LinearLayout>

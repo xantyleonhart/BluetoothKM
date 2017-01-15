@@ -1,0 +1,8 @@
+{
+  "macros": [
+    {
+      "name": "F1",
+      "keyCodes": "KEYCODE_CTRL_LEFT/KEYCODE_ALT_LEFT/KEYCODE_T"
+    }
+  ]
+}

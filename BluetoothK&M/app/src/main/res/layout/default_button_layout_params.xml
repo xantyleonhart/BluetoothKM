@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--Esto sólo sirve para poder cargar los pámetros de layout de los botones
+    en el grid layout sin tener que utilizar la api 21-->
+    <Button
+        android:id="@+id/default_layout_grid"
+        android:layout_columnWeight="1"/>
+
+</GridLayout>

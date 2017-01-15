@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BluetoothK&amp;M</string>
+    <string name="LMB">Click Izq</string>
+    <string name="RMB">Click Der</string>
+    <string name="select_device_str">Seleccione un dispositivo:</string>
+    <string name="start">CONECTAR</string>
+    <string name="exit">SALIR</string>
+    <string name="help">AYUDA</string>
+    <string name="getting_started_str">1. Guía de instalación</string>
+    <string name="how_to_use_str">2. Cómo usar</string>
+    <string name="create_macros_str">3. Creación de macros</string>
+    <string name="keycodes_str">4. Macros y Key Codes</string>
+    <string name="sensors_str">5. Sensores</string>
+    <string name="troubleshooting_str">6. Problemas conocidos</string>
+
+
+    <string name="settings">OPCIONES</string>
+    <string name="manage_macros_str">Administre sus macros</string>
+    <string name="add_str">Añadir nueva macro</string>
+    <string name="name_str">Etiqueta :</string>
+    <string name="add_key_str">Añadir tecla</string>
+    <string name="keys_str">Teclas :</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="sensitivity">Sensibilidad:</string>
+    <string name="m_sensitivity">Sensibilidad del ratón:</string>
+    <string name="s_sensitivity">Sensibilidad de la rueda:</string>
+    <string name="help_1"> PRIMEROS PASOS: \n
+        \t Antes de nada, debe instalar el servidor de bluetooth en su PC.\n
+        Puede descargar el servidor pulsando en el siguiente enlace:\n
+        https://mega.nz/#!fQhGAKqJ!qRF2xtOyVWNDYooXYwsKrnC-qZVVdC_MdY_c81Qou3Y\n\n
+        Una vez descargado, abra la consola de comandos y ejecute el servidor
+        con el comando:\n
+        \"java -jar BluetoothServer.jar\"\n
+        Esto arrancará el servidor, lo que le permitirá conectar su dispositivo al ordenador\n
+        Una vez hecho esto, debe emparejar su dispositivo al ordenador, para que le sea posible
+        conectarse a él usando el menú de la App.\n
+        Una vez emparejado, su ordenador aparecerá en la lista del menú de conexión. Sólo tendrá que
+        pulsar sobre él, y listo!
+    </string>
+    <string name = "help_2">USANDO EL MOUSE:\n
+        \t Una vez conectado, verá un gran panel central que puede utilizar para move el cursor,
+        de la misma manera en que lo haría con el panel de un ordenador portátil.\n
+        El panel es capaz de detectar gestos de click y doble click, pero también puede utilizar
+        los botones situados en la parte superior.\n
+        Para abrir el teclado, pulse sobre el gran botón en la parte inferior de la pantalla.\n
+        Para cambiar entre el teclado virtual y la lista de macros, coloque el dedo sobre la zona
+        del botón del teclado y deslice hacia la derecha o izquierda.\n
+        Puede cambiar la sensibilidad del ratón usando las barras situadas en la parte inferior de
+        la pantalla.
+    </string>
+    <string name = "help_3">EDITE SUS PROPIAS MACROS:\n
+        \t Usted puede crear, borrar o modificar combinaciones de teclas personalizadas o "macros".\n
+        Para hacer esto, pulse sobre el botón "OPCIONES" del menú principal, y se le abrirá una
+        pantalla con varios botones, cada uno representando una macro.\n
+        Para crear una nueva macro, pulse el botón "+" en la parte superior de la pantalla.\n
+        Para modificar o borrar una macro existente, mantenga pulsado el botón correspondiente.
+    </string>
+
+    <string name = "help_4">CÓDIGOS DE LAS MACROS: \n
+        \t Si ya ha intentado crear sus propias macros, habrá notado que utilizan unos códigos de
+        teclas específicos, como por ejemplo "KEYCODE_CTRL_LEFT".\n
+        Estos códigos (key codes) representan cada uno de los botones del teclado que se pulsarán al
+        usar la macro, cada uno separado por barras "/". Puede consultar la lista completa de
+        códigos (key codes) pulsando en el siguiente enlace:\n
+        https://developer.android.com/reference/android/view/KeyEvent.html#Constants
+    </string>
+
+    <string name = "help_5">USANDO LOS SENSORES: \n
+        \t ¡También puede utilizar los sensores de movimiento del telefono para manejar el ratón!\n
+        Para hacer esto, simplemente active o desactive los sensores deseados utilizando los dos
+        botones de encendido/apagado: "accel" or "gyro".\n\n
+        -accel es para usar el teléfono como un mouse convencional, deslizándolo sobre una superficie
+        lisa(experimental)\n
+        -gyro le permite manejar el puntero del ratón inclinando su teléfono hacia alante, atrás o
+        a los lados.
+    </string>
+
+    <string name = "help_6">SI NO ES CAPAZ DE ARRANCAR EL SERVIDOR EN LINUX: \n\n
+    Instale los siguientes paquetes:\n
+    libbluetooth\n
+    libbluetooth3\n
+    libbluetooth-dev\n\n
+
+
+    Abra un terminal y ejecute:\n
+    sudo nano /etc/systemd/system/bluetooth.target.wants/bluetooth.service\n
+
+    cambie la línea:\n
+
+    ExecStart=/usr/lib/bluetooth/bluetoothd\n
+
+    por:\n
+
+    ExecStart=/usr/lib/bluetooth/bluetoothd -C\n
+
+    y recargue el bluetooth daemon:\n
+
+    sudo systemctl daemon-reload\n
+
+    sudo systemctl restart bluetooth\n\n
+
+    Si el problema persiste, pruebe a lanzar el servidor con el superusuario (sudo).
+    </string>
+</resources>
