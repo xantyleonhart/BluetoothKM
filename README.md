@@ -19,5 +19,4 @@
 	
 	root privileges (run as root)
 
-# The java server has NO GRAPHIC USER INTERFACE, it should always be run on 
-  the console.
+# The java server has NO GRAPHIC USER INTERFACE, it should always be run on the console.
