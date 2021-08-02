@@ -18,5 +18,7 @@
 	Starting the bluetooth daemon with the '-C' (or '--compat') option
 	
 	root privileges (run as root)
+	
+## Running the server on windows doesn't require any special software, just run it on the console:
 
 # The java server has NO GRAPHIC USER INTERFACE, it should always be run on the console.
