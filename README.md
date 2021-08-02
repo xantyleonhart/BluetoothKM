@@ -19,6 +19,6 @@
 	
 	root privileges (run as root)
 	
-## Running the server on windows doesn't have any special requirements, just run it on the console:
+## Running the server on windows doesn't have any special requirements, just run it on the console
 
 # The java server has NO GRAPHIC USER INTERFACE, it should always be run on the console.
